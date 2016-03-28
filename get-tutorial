@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+mkdir tutorial
+
+curl http://compilers.iecc.com/crenshaw/crenshaw-txt.zip -o tutorial/crenshaw-txt.zip
+
+cd tutorial && unzip crenshaw-txt.zip
