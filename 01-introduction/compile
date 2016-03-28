@@ -1,0 +1,83 @@
+#!/usr/bin/env python3
+
+import sys
+
+
+look = None
+remaining_code = None
+
+
+def main():
+    if len(sys.argv) < 2:
+        print('No input file specified', sys.stderr)
+        sys.exit(1)
+    load_input_file(sys.argv[1])
+    init()
+
+
+def load_input_file(input_file):
+    global remaining_code
+    with open(input_file) as f:
+        remaining_code = f.read()
+
+
+def get_char():
+    global look, remaining_code
+    if remaining_code:
+        look = remaining_code[0]
+        remaining_code = remaining_code[1:]
+    else:
+        error('Tried to read past end of file')
+
+
+def error(msg):
+    print('Error: {}'.format(msg))
+
+
+def abort(msg):
+    error(msg)
+    sys.exit(1)
+
+
+def expected(msg):
+    abort('{} expected'.format(msg))
+
+
+def match(expected_char):
+    if look == expected_char:
+        get_char()
+    else:
+        expected(expected_char)
+
+
+def is_alpha(char):
+    return char.isalpha()
+
+
+def is_digit(char):
+    return char.isdigit()
+
+
+def get_identifier():
+    if not is_alpha(look):
+        expected('identifier')
+    result = look.upper()
+    get_char()
+    return result
+
+
+def emit(s):
+    print('    {}'.format(s))
+
+
+def emit_ln(s):
+    emit(s)
+    print('')
+
+
+def init():
+    get_char()
+
+
+if __name__ == '__main__':
+    main()
